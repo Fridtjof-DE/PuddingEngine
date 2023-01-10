@@ -13,10 +13,11 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 
-public class Core implements Runnable{
+public class Core implements Runnable
+{
 
     //window
-    private me.fridtjof.puddingengine.gfx.Window window;
+    private Window window;
     private BufferStrategy bs;
     private Graphics g;
     public int width, height, fpsLimit;
@@ -40,7 +41,8 @@ public class Core implements Runnable{
     private Thread thread;
 
 
-    public Core(String title, int width, int height, boolean fullscreen, int fpsLimit, long startTime, boolean debug) {
+    public Core(String title, int width, int height, boolean fullscreen, int fpsLimit, long startTime, boolean debug)
+    {
         this.title = title;
         this.width = width;
         this.height = height;
@@ -52,12 +54,13 @@ public class Core implements Runnable{
         logger = new Logger(debug);
     }
 
-    private void init() {
-        //logging
+    private void init()
+    {
         logger.info("Initialisation...");
 
         //window
-        if(fullscreen) {
+        if(fullscreen)
+        {
             GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
             width = gd.getDisplayMode().getWidth();
             height = gd.getDisplayMode().getHeight();
@@ -77,18 +80,111 @@ public class Core implements Runnable{
         logger.info("Engine successfully initialized in " + bootTime + "ms!");
     }
 
-    private void tick() {
+    public synchronized void start()
+    {
+        if(running)
+        {
+            return;
+        } else {
 
+            running = true;
+            thread = new Thread(this);
+            thread.setName("Main thread");
+            logger.info("Starting main thread...");
+            thread.start();
+        }
+    }
+
+    public void run()
+    {
+        init();
+        loop();
+        stop();
+    }
+
+    private void loop()
+    {
+        int tpsLimit = 60;
+        double timePerTick = 1E9 / tpsLimit;
+        double timePerFrame = 1E9 / fpsLimit;
+        double delta_tps = 0;
+        double delta_fps = 0;
+        long now;
+        long lastTime = System.nanoTime();
+        long timer = 0;
+        int ticks = 0;
+        int frames = 0;
+
+        //game loop
+        while(running)
+        {
+            now = System.nanoTime();
+            delta_tps += (now - lastTime) / timePerTick;
+            delta_fps += (now - lastTime) / timePerFrame;
+            timer += now - lastTime;
+            lastTime = now;
+
+            if(delta_tps >= 1)
+            {
+                tick();
+                ticks++;
+                delta_tps--;
+            }
+
+            if(delta_fps >= 1)
+            {
+                render();
+                frames++;
+                delta_fps--;
+            }
+
+            if(timer >= 1000000000)
+            {
+                //window title
+                window.updateTitle(title + " | TPS: " + ticks + ", FPS: " + frames);
+
+                ticks = 0;
+                frames = 0;
+                timer = 0;
+            }
+        }
+    }
+
+    public synchronized void stop()
+    {
+        logger.info("Stopping engine...");
+        if(!running)
+        {
+            return;
+        } else
+        {
+            running = false;
+            try
+            {
+                thread.join();
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void tick()
+    {
         input.tick();
 
-        if(Scene.getState() != null) {
+        if(Scene.getState() != null)
+        {
             Scene.getState().tick();
         }
     }
 
-    private void render() {
+    private void render()
+    {
         bs = window.getCanvas().getBufferStrategy();
-        if(bs == null) {
+        if(bs == null)
+        {
             window.getCanvas().createBufferStrategy(3);
             return;
         }
@@ -103,89 +199,14 @@ public class Core implements Runnable{
         g.fillRect(0, 0, width, height);
 
 
-        if(Scene.getState() != null) {
+        if(Scene.getState() != null)
+        {
             Scene.getState().render(g);
         }
 
         //End drawing!
         bs.show();
         g.dispose();
-    }
-
-    public void run() {
-
-        init();
-
-        int tpsLimit = 60;
-        double timePerTick = 1E9 / tpsLimit;
-        double timePerFrame = 1E9 / fpsLimit;
-        double delta_tps = 0;
-        double delta_fps = 0;
-        long now;
-        long lastTime = System.nanoTime();
-        long timer = 0;
-        int ticks = 0;
-        int frames = 0;
-
-
-        while(running) {
-            now = System.nanoTime();
-            delta_tps += (now - lastTime) / timePerTick;
-            delta_fps += (now - lastTime) / timePerFrame;
-            timer += now - lastTime;
-            lastTime = now;
-
-            if(delta_tps >= 1) {
-                tick();
-                ticks++;
-                delta_tps--;
-            }
-
-            if(delta_fps >= 1) {
-                render();
-                frames++;
-                delta_fps--;
-            }
-
-            if(timer >= 1000000000) {
-
-                //window title
-                window.updateTitle(title + " | TPS: " + ticks + ", FPS: " + frames);
-
-                ticks = 0;
-                frames = 0;
-                timer = 0;
-            }
-        }
-
-        stop();
-    }
-
-    public synchronized void start() {
-        if(running) {
-            return;
-        } else {
-
-            running = true;
-            thread = new Thread(this);
-            thread.setName("Main thread");
-            logger.info("Starting main thread...");
-            thread.start();
-        }
-    }
-
-    public synchronized void stop() {
-        logger.info("Stopping engine...");
-        if(!running) {
-            return;
-        } else {
-            running = false;
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 

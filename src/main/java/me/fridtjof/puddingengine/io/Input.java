@@ -4,7 +4,8 @@ import me.fridtjof.puddingengine.Core;
 
 import java.awt.event.*;
 
-public class Input implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
+public class Input implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener
+{
 
     private Core c;
 
@@ -19,7 +20,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     private int mouseX, mouseY;
     private int scroll;
 
-    public Input(Core core) {
+    public Input(Core core)
+    {
         this.c = core;
         mouseX = 0;
         mouseY = 0;
@@ -31,109 +33,132 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
         c.getWindow().getCanvas().addMouseWheelListener(this);
     }
 
-    public void tick() {
+    public void tick()
+    {
 
         scroll = 0;
 
-        for(int i = 0; i < NUM_KEYS; i++) {
+        for(int i = 0; i < NUM_KEYS; i++)
+        {
             keysLast[i] = keys[i];
         }
 
-        for(int i = 0; i < NUM_BUTTONS; i++) {
+        for(int i = 0; i < NUM_BUTTONS; i++)
+        {
             buttonsLast[i] = buttons[i];
         }
     }
 
-    public boolean isKeyPressed(int keyCode) {
+    public boolean isKeyPressed(int keyCode)
+    {
         return keys[keyCode];
     }
-    public boolean isKeyJustReleased(int keyCode) {
+    public boolean isKeyJustReleased(int keyCode)
+    {
         return !keys[keyCode] && keysLast[keyCode];
     }
-    public boolean isKeyJustPressed(int keyCode) {
+    public boolean isKeyJustPressed(int keyCode)
+    {
         return keys[keyCode] && !keysLast[keyCode];
     }
 
-    public boolean isButtonPressed(int button) {
+    public boolean isButtonPressed(int button)
+    {
         return buttons[button];
     }
-    public boolean isButtonJustReleased(int button) {
+    public boolean isButtonJustReleased(int button)
+    {
         return !buttons[button] && buttonsLast[button];
     }
-    public boolean isButtonJustPressed(int button) {
+    public boolean isButtonJustPressed(int button)
+    {
         return buttons[button] && !buttonsLast[button];
     }
 
 
     @Override
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(KeyEvent e)
+    {
 
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e)
+    {
         keys[e.getKeyCode()] = true;
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(KeyEvent e)
+    {
         keys[e.getKeyCode()] = false;
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(MouseEvent e)
+    {
 
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(MouseEvent e)
+    {
         buttons[e.getButton()] = true;
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(MouseEvent e)
+    {
         buttons[e.getButton()] = false;
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(MouseEvent e)
+    {
 
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseExited(MouseEvent e)
+    {
 
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
+    public void mouseDragged(MouseEvent e)
+    {
         mouseX = (int)(e.getX() / c.getCamera().getScale());
         mouseY = (int)(e.getY() / c.getCamera().getScale());
     }
 
     @Override
-    public void mouseMoved(MouseEvent e) {
+    public void mouseMoved(MouseEvent e)
+    {
         mouseX = (int)(e.getX() / c.getCamera().getScale());
         mouseY = (int)(e.getY() / c.getCamera().getScale());
     }
 
     @Override
-    public void mouseWheelMoved(MouseWheelEvent e) {
+    public void mouseWheelMoved(MouseWheelEvent e)
+    {
         scroll = e.getWheelRotation();
     }
 
 
     //getters
 
-    public int getMouseX() {
+    public int getMouseX()
+    {
         return mouseX;
     }
 
-    public int getMouseY() {
+    public int getMouseY()
+    {
         return mouseY;
     }
 
-    public int getScroll() {
+    public int getScroll()
+    {
         return scroll;
     }
 }

@@ -4,21 +4,25 @@ import me.fridtjof.puddingengine.Core;
 
 import java.awt.*;
 
-public abstract class Scene {
+public abstract class Scene
+{
 
     private static Scene currentState = null;
 
-    public static void setState(Scene state) {
+    public static void setState(Scene state)
+    {
         currentState = state;
     }
 
-    public static Scene getState() {
+    public static Scene getState()
+    {
         return currentState;
     }
 
     protected Core core;
 
-    public Scene(Core core) {
+    public Scene(Core core)
+    {
         this.core = core;
     }
 

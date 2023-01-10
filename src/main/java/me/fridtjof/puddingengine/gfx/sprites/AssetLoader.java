@@ -2,21 +2,25 @@ package me.fridtjof.puddingengine.gfx.sprites;
 
 import me.fridtjof.puddingengine.Core;
 
-public abstract class AssetLoader {
+public abstract class AssetLoader
+{
 
     protected Core core;
 
-    public AssetLoader(Core core) {
+    public AssetLoader(Core core)
+    {
         this.core = core;
     }
     public abstract void init();
     private static AssetLoader currentState = null;
 
-    public static void setState(AssetLoader state) {
+    public static void setState(AssetLoader state)
+    {
         currentState = state;
     }
 
-    public static AssetLoader getState() {
+    public static AssetLoader getState()
+    {
         return currentState;
     }
 }

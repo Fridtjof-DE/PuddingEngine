@@ -3,16 +3,18 @@ package me.fridtjof.puddingengine.gfx;
 import javax.swing.*;
 import java.awt.*;
 
-public class Window {
+public class Window
+{
 
     private static boolean fullscreen = false;
     private static JFrame frame;
     private Canvas canvas;
 
-    private String title, version;
+    private String title;
     private int width, height;
 
-    public Window(String title, int width, int height, boolean fullscreen) {
+    public Window(String title, int width, int height, boolean fullscreen)
+    {
         this.title = title;
         this.width = width;
         this.height = height;
@@ -20,8 +22,8 @@ public class Window {
         createDisplay();
     }
 
-    private void createDisplay() {
-
+    private void createDisplay()
+    {
         //set window properties
         frame = new JFrame(title);
         frame.setSize(width, height);
@@ -29,7 +31,8 @@ public class Window {
         frame.setResizable(true);
         frame.setLocationRelativeTo(null);
 
-        if(fullscreen) {
+        if(fullscreen)
+        {
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             frame.setUndecorated(true);
         }
@@ -46,15 +49,18 @@ public class Window {
         frame.pack();
     }
 
-    public void updateTitle(String title) {
+    public void updateTitle(String title)
+    {
         frame.setTitle(title);
     }
 
-    public Canvas getCanvas() {
+    public Canvas getCanvas()
+    {
         return canvas;
     }
 
-    public JFrame getFrame() {
+    public JFrame getFrame()
+    {
         return frame;
     }
 }

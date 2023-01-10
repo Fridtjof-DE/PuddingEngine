@@ -3,12 +3,14 @@ package me.fridtjof.samplegame;
 import me.fridtjof.samplegame.scenes.TestScene;
 import me.fridtjof.puddingengine.Core;
 
-public class Launcher {
+public class Launcher
+{
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 
         //launcher parameters
-        String title = Core.NAME + " " + Core.VERSION;
+        String title = Core.NAME + " - " + Core.VERSION;
         int ratioHeight = 9;
         int ratioWidth = 16;
         int height = 720;
@@ -22,7 +24,6 @@ public class Launcher {
 
         core.setScene(new TestScene(core));
         core.setAssetLoader(new TestAssets(core));
-        //core.setAssetLoader(new Assets());
         core.start();
     }
 }

@@ -5,21 +5,25 @@ import me.fridtjof.puddingengine.Core;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Renderer {
+public class Renderer
+{
 
     Core c;
     Graphics g;
 
-    public Renderer(Core core, Graphics graphics) {
+    public Renderer(Core core, Graphics graphics)
+    {
         this.c = core;
         this.g = graphics;
     }
 
-    public void drawImage(BufferedImage image, int x, int y) {
+    public void drawImage(BufferedImage image, int x, int y)
+    {
         drawImage(image, x, y, image.getWidth(), image.getHeight());
     }
 
-    public void drawImage(BufferedImage image, int x, int y, int w, int h) {
+    public void drawImage(BufferedImage image, int x, int y, int w, int h)
+    {
         x = (int) c.getCamera().posX(x);
         y = (int) c.getCamera().posY(y);
         w = (int) c.getCamera().scaleX(w);
@@ -27,7 +31,8 @@ public class Renderer {
         g.drawImage((Image) image, x, y, w, h, null);
     }
 
-    public void fillRect(int x, int y, int w, int h, Color color) {
+    public void fillRect(int x, int y, int w, int h, Color color)
+    {
         x = (int) c.getCamera().posX(x);
         y = (int) c.getCamera().posY(y);
         w = (int) c.getCamera().scaleX(w);

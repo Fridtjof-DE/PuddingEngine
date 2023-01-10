@@ -6,21 +6,22 @@ import me.fridtjof.puddingengine.gfx.sprites.Sprite;
 
 import java.awt.image.BufferedImage;
 
-public class TestAssets extends AssetLoader {
-
+public class TestAssets extends AssetLoader
+{
     Core c;
 
     private static final int GRID = 16;
     public static BufferedImage GRASS_TILE, PLAYER, ROCK_TILE, PURPLE_TILE, SHEET;
 
-    public TestAssets(Core c) {
+    public TestAssets(Core c)
+    {
         super(c);
         this.c = c;
     }
 
     @Override
-    public void init() {
-
+    public void init()
+    {
         Sprite tileSheet = new Sprite(c.getSpriteLoader().loadImage("/samplegame/images/tile_map.png"));
 
         GRASS_TILE = tileSheet.crop(0, 0, 1, 1, GRID);
