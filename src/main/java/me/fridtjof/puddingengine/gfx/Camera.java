@@ -47,6 +47,7 @@ public class Camera
         return scale;
     }
 
+    //Should be X or X.5
     public void setScale(double scale)
     {
         this.scale = scale;
