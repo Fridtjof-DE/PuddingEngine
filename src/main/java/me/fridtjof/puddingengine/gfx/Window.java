@@ -1,11 +1,14 @@
 package me.fridtjof.puddingengine.gfx;
 
+import me.fridtjof.puddingengine.Core;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class Window
 {
 
+    private Core c;
     private static boolean fullscreen = false;
     private static JFrame frame;
     private Canvas canvas;
@@ -13,8 +16,9 @@ public class Window
     private String title;
     private int width, height;
 
-    public Window(String title, int width, int height, boolean fullscreen)
+    public Window(Core core, String title, int width, int height, boolean fullscreen)
     {
+        this.c = core;
         this.title = title;
         this.width = width;
         this.height = height;
@@ -28,6 +32,7 @@ public class Window
         frame = new JFrame(title);
         frame.setSize(width, height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
         frame.setResizable(true);
         frame.setLocationRelativeTo(null);
 

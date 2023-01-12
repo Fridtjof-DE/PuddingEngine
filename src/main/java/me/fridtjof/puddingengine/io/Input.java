@@ -6,7 +6,6 @@ import java.awt.event.*;
 
 public class Input implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener
 {
-
     private Core c;
 
     private final int NUM_KEYS = 256;
@@ -20,14 +19,14 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     private int mouseX, mouseY;
     private int scroll;
 
-    public Input(Core core)
+    public Input(Core c)
     {
-        this.c = core;
+        this.c = c;
         mouseX = 0;
         mouseY = 0;
         scroll = 0;
 
-        c.getWindow().getCanvas().addKeyListener(this);
+        c.getWindow().getFrame().addKeyListener(this);
         c.getWindow().getCanvas().addMouseListener(this);
         c.getWindow().getCanvas().addMouseMotionListener(this);
         c.getWindow().getCanvas().addMouseWheelListener(this);
@@ -35,7 +34,6 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 
     public void tick()
     {
-
         scroll = 0;
 
         for(int i = 0; i < NUM_KEYS; i++)
@@ -43,8 +41,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
             keysLast[i] = keys[i];
         }
 
-        for(int i = 0; i < NUM_BUTTONS; i++)
-        {
+        for(int i = 0; i < NUM_BUTTONS; i++) {
+
             buttonsLast[i] = buttons[i];
         }
     }
@@ -75,22 +73,22 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
         return buttons[button] && !buttonsLast[button];
     }
 
-
     @Override
     public void keyTyped(KeyEvent e)
     {
-
     }
 
     @Override
     public void keyPressed(KeyEvent e)
     {
+        c.logger.debug("Key Pressed Event");
         keys[e.getKeyCode()] = true;
     }
 
     @Override
     public void keyReleased(KeyEvent e)
     {
+        c.logger.debug("Key Released Event");
         keys[e.getKeyCode()] = false;
     }
 
@@ -127,15 +125,19 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     @Override
     public void mouseDragged(MouseEvent e)
     {
-        mouseX = (int)(e.getX() / c.getCamera().getScale());
-        mouseY = (int)(e.getY() / c.getCamera().getScale());
+        mouseX = (int)(e.getX());
+        mouseY = (int)(e.getY());
+        //mouseX = (int)(e.getX() / c.getScale());
+        //mouseY = (int)(e.getY() / c.getScale());
     }
 
     @Override
     public void mouseMoved(MouseEvent e)
     {
-        mouseX = (int)(e.getX() / c.getCamera().getScale());
-        mouseY = (int)(e.getY() / c.getCamera().getScale());
+        mouseX = (int)(e.getX());
+        mouseY = (int)(e.getY());
+        //mouseX = (int)(e.getX() / c.getScale());
+        //mouseY = (int)(e.getY() / c.getScale());
     }
 
     @Override

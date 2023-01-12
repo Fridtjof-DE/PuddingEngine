@@ -10,6 +10,7 @@ import me.fridtjof.puddingengine.io.Logger;
 import me.fridtjof.puddingengine.scn.Scene;
 
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 
 
@@ -65,13 +66,13 @@ public class Core implements Runnable
             width = gd.getDisplayMode().getWidth();
             height = gd.getDisplayMode().getHeight();
         }
-        window = new me.fridtjof.puddingengine.gfx.Window(title, width, height, fullscreen);
+        window = new me.fridtjof.puddingengine.gfx.Window(this, title, width, height, fullscreen);
+
+        input = new Input(this);
 
         spriteLoader = new SpriteLoader(this);
         assetLoader.init();
         camera = new Camera(this,1, 0, 0);
-
-        input = new Input(this);
 
         Scene.setState(scene);
 
@@ -172,12 +173,13 @@ public class Core implements Runnable
 
     private void tick()
     {
-        input.tick();
-
         if(Scene.getState() != null)
         {
             Scene.getState().tick();
         }
+
+        //input has to be ticked after the scene
+        input.tick();
     }
 
     private void render()
