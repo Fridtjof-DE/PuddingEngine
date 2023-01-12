@@ -18,12 +18,23 @@ public class TestScene extends Scene {
     }
 
     @Override
-    public void tick() {
-        if (c.getInput().isKeyPressed(KeyEvent.VK_W)) {
-            c.logger.debug("test");
+    public void tick()
+    {
+        if (c.getInput().isKeyPressed(KeyEvent.VK_W))
+        {
+            c.logger.info("test W");
         }
-        if (c.getInput().isButtonJustReleased(1)) {
-            c.logger.debug("test");
+        if (c.getInput().isButtonJustReleased(1))
+        {
+            c.logger.debug("test MOuse");
+        }
+        if (c.getInput().isKeyJustReleased(KeyEvent.VK_S))
+        {
+            c.logger.debug("test 1");
+        }
+        if (c.getInput().isKeyJustPressed(KeyEvent.VK_D))
+        {
+            c.logger.debug("test 5");
         }
     }
 

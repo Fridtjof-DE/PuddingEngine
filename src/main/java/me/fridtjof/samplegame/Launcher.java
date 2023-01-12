@@ -13,7 +13,7 @@ public class Launcher
         String title = Core.NAME + " - " + Core.VERSION;
         int ratioHeight = 9;
         int ratioWidth = 16;
-        int height = 720;
+        int height = 420;
         int width = height / ratioHeight * ratioWidth;
         boolean fullscreen = false;
         int fpsLimit = 60;
