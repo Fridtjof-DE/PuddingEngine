@@ -6,7 +6,6 @@ import me.fridtjof.samplegame.TestAssets;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.security.Key;
 
 public class TestScene extends Scene {
 
@@ -43,7 +42,7 @@ public class TestScene extends Scene {
 
         c.getCamera().setCamX(-50);
         c.getCamera().setCamY(-50);
-        c.getCamera().setScale(7.5);
+        //c.getCamera().setScale(7.5);
 
         c.r().fillRect(1, 150, 50, 50, Color.RED);
 
@@ -53,6 +52,6 @@ public class TestScene extends Scene {
         c.r().drawImage(TestAssets.PURPLE_TILE, 150, 0, 50, 50);
         c.r().drawImage(TestAssets.PURPLE_TILE, -50, -50, 50, 50);
         //g.drawImage(TestAssets.PURPLE_TILE, 200, 400, 16, 160, null);
-        g.drawImage(TestAssets.SHEET, c.width / 2, c.height / 2, 250, 250, null);
+        //g.drawImage(TestAssets.SHEET, c.sceneWidth / 2, c.sceneHeight / 2, 250, 250, null);
     }
 }

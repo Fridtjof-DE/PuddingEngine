@@ -8,9 +8,9 @@ import me.fridtjof.puddingengine.io.Input;
 import me.fridtjof.puddingengine.io.SpriteLoader;
 import me.fridtjof.puddingengine.io.Logger;
 import me.fridtjof.puddingengine.scn.Scene;
+import me.fridtjof.samplegame.TestAssets;
 
 import java.awt.*;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 
 
@@ -21,7 +21,7 @@ public class Core implements Runnable
     private Window window;
     private BufferStrategy bs;
     private Graphics g;
-    public int width, height, fpsLimit;
+    public int sceneWidth, sceneHeight, fpsLimit;
     private boolean fullscreen, debug;
 
     public Logger logger;
@@ -45,8 +45,8 @@ public class Core implements Runnable
     public Core(String title, int width, int height, boolean fullscreen, int fpsLimit, long startTime, boolean debug)
     {
         this.title = title;
-        this.width = width;
-        this.height = height;
+        this.sceneWidth = width;
+        this.sceneHeight = height;
         this.fullscreen = fullscreen;
         this.fpsLimit = fpsLimit;
         this.startTime = startTime;
@@ -60,19 +60,13 @@ public class Core implements Runnable
         logger.info("Initialisation...");
 
         //window
-        if(fullscreen)
-        {
-            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-            width = gd.getDisplayMode().getWidth();
-            height = gd.getDisplayMode().getHeight();
-        }
-        window = new me.fridtjof.puddingengine.gfx.Window(this, title, width, height, fullscreen);
+        window = new me.fridtjof.puddingengine.gfx.Window(this, title, sceneWidth, sceneHeight, fullscreen);
 
         input = new Input(this);
 
         spriteLoader = new SpriteLoader(this);
         assetLoader.init();
-        camera = new Camera(this,1, 0, 0);
+        camera = new Camera(this, g,1, 0, 0);
 
         Scene.setState(scene);
 
@@ -194,17 +188,19 @@ public class Core implements Runnable
         renderer = new Renderer(this, g);
 
         //Clear Screen
-        g.clearRect(0, 0, width, height);
+        g.clearRect(0, 0, window.getWidth(), window.getHeight());
 
         //Draw Here!
         g.setColor(Color.DARK_GRAY);
-        g.fillRect(0, 0, width, height);
+        g.fillRect(0, 0, window.getWidth(), window.getHeight());
 
 
         if(Scene.getState() != null)
         {
             Scene.getState().render(g);
         }
+
+        camera.tick(g);
 
         //End drawing!
         bs.show();
@@ -214,39 +210,48 @@ public class Core implements Runnable
 
     //setters and getters
 
-    public Scene getScene() {
+    public Scene getScene()
+    {
         return scene;
     }
 
-    public void setScene(Scene scene) {
+    public void setScene(Scene scene)
+    {
         this.scene = scene;
     }
 
-    public void setAssetLoader(AssetLoader assetLoader) {
+    public void setAssetLoader(AssetLoader assetLoader)
+    {
         this.assetLoader = assetLoader;
     }
 
-    public AssetLoader getAssetLoader() {
+    public AssetLoader getAssetLoader()
+    {
         return assetLoader;
     }
 
-    public SpriteLoader getSpriteLoader() {
+    public SpriteLoader getSpriteLoader()
+    {
         return spriteLoader;
     }
 
-    public Window getWindow() {
+    public Window getWindow()
+    {
         return window;
     }
 
-    public Camera getCamera() {
+    public Camera getCamera()
+    {
         return camera;
     }
 
-    public Renderer r() {
+    public Renderer r()
+    {
         return renderer;
     }
 
-    public Input getInput() {
+    public Input getInput()
+    {
         return input;
     }
 }

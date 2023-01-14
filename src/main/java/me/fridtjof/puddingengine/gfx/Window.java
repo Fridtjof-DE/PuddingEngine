@@ -29,6 +29,14 @@ public class Window
     private void createDisplay()
     {
         //set window properties
+        if(fullscreen)
+        {
+            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+            width = gd.getDisplayMode().getWidth();
+            height = gd.getDisplayMode().getHeight();
+        }
+
+
         frame = new JFrame(title);
         frame.setSize(width, height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,5 +75,15 @@ public class Window
     public JFrame getFrame()
     {
         return frame;
+    }
+
+    public int getWidth()
+    {
+        return canvas.getWidth();
+    }
+
+    public int getHeight()
+    {
+        return canvas.getHeight();
     }
 }
