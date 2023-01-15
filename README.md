@@ -5,3 +5,23 @@
 
 # Pudding Engine
  A simple Java AWT 2D game engine
+
+## Roadmap to 1.0.0 beta
+- [x] game loop
+- [x] window
+- [x] scene system
+- [x] asset loader
+- [x] movable & scalable camera
+- [x] keyboard & mouse input
+- [x] auto camera scaling
+- [x] borders to keep aspect ratio
+- [ ] entity system
+- [ ] tile maps
+- [ ] entity system
+- [ ] collisions
+- [ ] console input
+- [ ] savegame system
+- [ ] sounds
+- [ ] user interface
+- [ ] level editor
+- [ ] path finding
